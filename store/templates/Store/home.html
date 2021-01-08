@@ -1,0 +1,129 @@
+{% extends "Store/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+<div class="banners bg-white">
+    <div class="container banner-images">
+        <div class="row no-gutters">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <img class="banner-1" src="{% static 'images/hero.jpg' %}" alt="">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <img class="banner-2" src="{% static 'images/hero-col-1.jpg' %}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <!-- Categories -->
+        <h4 class="text-uppercase mt-4 p-2 cat">Categories</h4>
+    </div>
+    <div class="cat-row">
+        {% for cat in cats %}
+        <div class="cat-cards bg-white">
+            <div class="cat-images">
+                <img src="{{ cat.cat_image.url }}" alt="">
+            </div>
+            <div class="titles">
+                <p class="text-center font-weight-bold cat-title">{{ cat.title }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Top product -->
+    <div class="card mt-4">
+        <div class="top-prod-title">
+            <div class="float-left top-prod-text">
+                <h4 class="mt-4 mb-4 p-2 text-uppercase float-left">Top Product</h4>
+            </div>
+            <div class="float-right top-prod-link">
+                <a class="pr-2" href="#">See All</a>
+            </div>
+        </div>
+    </div>
+    <div class="prod-row">
+        {% for product in products %}
+        <div class="prod-cards bg-white">
+            <a href="{% url 'Product_details' product.slug %}">
+            <div class="prod-images">
+                <img src="{{ product.image.url }}" alt="">
+            </div>
+        </a>
+            <div class="titles">
+                <p class="text-center font-weight-bold">AVAILABLE</p>
+                <p class="text-center font-weight-bold">{{product.price}}RM.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- New product -->
+    <div class="card mt-4">
+        <div class="top-prod-title">
+            <div class="float-left top-prod-text">
+                <h4 class="mt-4 mb-4 p-2 text-uppercase float-left">Newest Product</h4>
+            </div>
+            <div class="float-right top-prod-link">
+                <a class="pr-2" href="#">See All</a>
+            </div>
+        </div>
+    </div>
+    <div class="prod-row">
+        {% for product in new_prod %}
+        <div class="prod-cards bg-white">
+            <div class="prod-images">
+            <a href="{% url 'Product_details' product.slug %}">
+                <img src="{{ product.image.url }}" alt="">
+                </a>
+            </div>
+            <div class="titles">
+                <p class="text-center font-weight-bold">AVAILABLE</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- All product -->
+    <div class="card mt-4">
+        <div class="top-prod-title">
+            <div class="float-left top-prod-text">
+                <h4 class="mt-4 mb-4 p-2 text-uppercase float-left">All Products</h4>
+            </div>
+            <div class="float-right top-prod-link">
+                <a class="pr-2" href="#">See All</a>
+            </div>
+        </div>
+    </div>
+    <div class="prod-row">
+        {% for product in products %}
+        <div class="prod-cards bg-white">
+            <div class="prod-images">
+            <a href="{% url 'Product_details' product.slug %}">
+                <img src="{{ product.image.url }}" alt="">
+                </a>
+            </div>
+            <div class="titles">
+                <p class="text-center font-weight-bold">AVAILABLE</p>
+                <p class="text-center font-weight-bold">
+                {% if product.discount_price %}
+                <del>{{product.price}}</p></del>
+                <p class="text-center font-weight-bold">{{product.discount_price}}RM./</p>
+                {% else %}
+                <p class="text-center font-weight-bold">{{product.price}}RM.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="{% static 'js/home.js' %}"></script>
+
+{% endblock %}
